@@ -1,15 +1,12 @@
 # importing the requests library
 import requests
 import json
-
+from GF import GF
 
 class StatsGiver:
-    x = 4
 
-    def __init__(self):
-        print("Initializing object!")
-
-    def get_stats(self):
+    @staticmethod
+    def get_stats():
 
         # api-endpoint
         url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
@@ -33,7 +30,8 @@ class StatsGiver:
 
         return data
 
-    def get_market(self):
+    @staticmethod
+    def get_market():
         # api-endpoint
         url = "https://api.bittrex.com/api/v1.1/public/getmarkets"
 
@@ -51,7 +49,8 @@ class StatsGiver:
 
         return data['result']
 
-    def get_market_summaries(self):
+    @staticmethod
+    def get_market_summaries():
         # api-endpoint
         url = "https://api.bittrex.com/api/v1.1/public/getmarketsummaries"
 
@@ -69,9 +68,10 @@ class StatsGiver:
 
         return data['result']
 
-    def get_market_summary(self, tradeString):
+    @staticmethod
+    def get_market_summary(tradeString):
         # api-endpoint
-        url = "https://api.bittrex.com/api/v1.1/public/getmarketsummary?market=btc-ltc"
+        url = "https://api.bittrex.com/api/v1.1/public/getmarketsummary?market=" + tradeString
 
         headers = {
             'Accepts': 'application/json',
@@ -85,3 +85,49 @@ class StatsGiver:
         # print(json.dumps(data, indent=4, sort_keys=True))
 
         return data['result']
+
+    @staticmethod # Gets the average trade price for the trade. !!! Does not work well with altcoins !!!
+    def get_average_trade(trade_string, interval):
+        candles = StatsGiver.get_market_candles(trade_string, interval)
+        stat_sum = 0
+        for i in candles:
+            stat_sum += ((float(i['open']) + float(i['close'])) / 2)
+
+        return stat_sum / len(candles)
+
+    @staticmethod  # Gets the average trade price for the trade. !!! Does not work well with altcoins !!!
+    def get_average_trade_extra(trade_string, interval):
+        candles = StatsGiver.get_market_candles(trade_string, interval)
+        stat_sum = 0
+        number_of_passes = 0
+        for i in candles:
+            mid_average = ((float(i['open']) + float(i['close'])) / 2)
+            stat_sum += mid_average
+        average = stat_sum / len(candles)
+        for i in candles:
+            open_v = float(i['open'])
+            close_v = float(i['close'])
+            if((average <= open_v) & (average >= close_v)) | ((average >= open_v) & (average <= close_v)):
+                number_of_passes += 1
+
+        return {'marketName':trade_string, 'average':average, "nop":number_of_passes}
+
+
+    @staticmethod # Get the the history of the market
+    def get_market_candles(trade_string, interval):
+
+        # api-endpoint
+        url = "https://api.bittrex.com/v3/markets/" + trade_string + "/candles?candleInterval=" + interval
+
+        headers = {
+            'Accepts': 'application/json',
+        }
+        # sending get request and saving the response as response object
+        r = requests.get(url=url, headers=headers, verify=True)
+
+        # extracting data in json format
+        data = r.json()
+
+        #print(json.dumps(data, indent=4, sort_keys=True))
+
+        return data

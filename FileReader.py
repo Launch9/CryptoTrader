@@ -2,13 +2,10 @@ from ConfigData import ConfigData
 import json
 
 
-
 class FileReader:
 
-    def __init__(self):
-        print("Initializing FileReader.")
-
-    def read_config(self):
+    @staticmethod
+    def read_config():
 
         print("Reading config...")
         cd = ConfigData()
@@ -44,11 +41,13 @@ class FileReader:
 
         return cd
 
-    def get_wallet(self):
+    @staticmethod
+    def get_wallet():
         with open('data/wallet.json') as json_file:
             return json.load(json_file)
 
-    def update_wallet(self, data):
+    @staticmethod
+    def update_wallet(data):
         with open('data/wallet.json', 'w') as json_file:
             json.dump(data, json_file)
             json_file.close()

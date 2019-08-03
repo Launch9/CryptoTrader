@@ -6,30 +6,23 @@ from FileWriter import FileWriter
 
 class Trader:
     market = {}
-    parser = Parser()
-    fileWriter = None
-    fileReader = None
-    statsGiver = None
 
-    def __init__(self, fileReader, fileWriter, statsGiver):
-        self.fileReader = fileReader
-        self.fileWriter = fileWriter
-        self.statsGiver = statsGiver
-
+    @staticmethod
     def update(self):
-        self.market = self.statsGiver.get_market_summaries()
+        self.market = StatsGiver.get_market_summaries()
 
-    def buy(self, trade_string, how_much_spent):
+    @staticmethod
+    def buy(trade_string, how_much_spent):
 
         # Separating currencies into two different strings
-        data = self.parser.separateTradeString(trade_string)
+        data = Parser.separateTradeString(trade_string)
         c_one = data['first']
         c_two = data['second']
 
         # Getting the wallet
-        wallet = self.fileReader.get_wallet()
+        wallet = FileReader.get_wallet()
 
-        summary = self.statsGiver.get_market_summary(trade_string)
+        summary = StatsGiver.get_market_summary(trade_string)
 
         # Best price you can get for the trade
         ask_price = summary[0]['Ask']
@@ -41,41 +34,41 @@ class Trader:
         print(how_much_spent)
         print(how_much_gained)
         # Storing this transaction
-        self.fileWriter.record_trans(trade_string, True, how_much_spent, how_much_gained, ask_price)
+        FileWriter.record_trans(trade_string, True, how_much_spent, how_much_gained, ask_price)
 
         # Changing values in the wallet
         wallet[c_one] -= how_much_spent  # BTC
         wallet[c_two] += how_much_gained  # LTC
 
         # Updating the wallet
-        self.fileReader.update_wallet(wallet)
+        FileReader.update_wallet(wallet)
 
-    def sell(self, trade_string, how_much_sold):
+    @staticmethod
+    def sell(trade_string, how_much_sold):
         # Separating currencies into two different strings
-        data = self.parser.separateTradeString(trade_string)
+        data = Parser.separateTradeString(trade_string)
         c_one = data['first']
         c_two = data['second']
 
         # Getting the wallet
-        wallet = self.fileReader.get_wallet()
+        wallet = FileReader.get_wallet()
 
-        summary = self.statsGiver.get_market_summary(trade_string)
+        summary = StatsGiver.get_market_summary(trade_string)
 
         # Best price you can get for the trade
         bid_price = summary[0]['Bid']
 
         # Calculating how much to subtract and add from wallet
-        how_much_spent = how_much_spent
-        how_much_gained = how_much_spent / ask_price
+        how_much_gained = how_much_sold / bid_price
 
-        print(how_much_spent)
+        print(how_much_sold)
         print(how_much_gained)
         # Storing this transaction
-        self.fileWriter.record_trans(trade_string, True, how_much_spent, how_much_gained, ask_price)
+        FileWriter.record_trans(trade_string, False, how_much_sold, how_much_gained, bid_price)
 
         # Changing values in the wallet
-        wallet[c_one] -= how_much_spent  # BTC
-        wallet[c_two] += how_much_gained  # LTC
+        wallet[c_one] += how_much_gained  # BTC
+        wallet[c_two] -= how_much_sold  # LTC
 
         # Updating the wallet
-        self.fileReader.update_wallet(wallet)
+        FileReader.update_wallet(wallet)
