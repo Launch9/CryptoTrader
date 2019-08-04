@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d236627-8a8f-47e4-937c-b863ea76a88e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Node.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/HeavyAl.pyx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileReader.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileReader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FileWriter.py" beforeDir="false" afterPath="$PROJECT_DIR$/FileWriter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/Factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StatsGiver.py" beforeDir="false" afterPath="$PROJECT_DIR$/StatsGiver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Trader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Trader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/BTC_history/BTC-LTC.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/BTC_history/BTC-LTC.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/wallet.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/wallet.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,15 +34,18 @@
   <component name="ProjectId" id="1OqW1F3w1pwnonKSKeWy7b5dplh" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/cython" />
+      <recent name="$PROJECT_DIR$/venv/cython" />
+      <recent name="$PROJECT_DIR$/venv" />
       <recent name="$PROJECT_DIR$/data" />
-      <recent name="$PROJECT_DIR$/data/graphs" />
-      <recent name="$PROJECT_DIR$/jsons" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -61,7 +60,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CryptoTrader" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -83,9 +82,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CryptoTrader" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/setup.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.setup" />
       </list>
     </recent_temporary>
   </component>

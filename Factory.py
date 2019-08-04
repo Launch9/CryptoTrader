@@ -17,9 +17,13 @@ class Factory:
     def create_nodes(self):
         wallet = FileReader.get_wallet()
         market = Parser.find_market_strings(self.mainCoin, StatsGiver.get_market_summaries())
-        #GF.pretty_print(market)
+
         for i in market:
-            GF.pretty_print(StatsGiver.get_average_trade_extra(Parser.reverse_trade_string(i['MarketName']), "DAY_1"))
+            data = StatsGiver.get_average_trade_extra(Parser.reverse_trade_string(i['MarketName']), "DAY_1", 1)
+            if data != False:
+                GF.pretty_print(data)
+            else:
+                print("Failed to get data")
 
 
     def update(self):

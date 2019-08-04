@@ -1,7 +1,9 @@
 # importing the requests library
 import requests
+import HeavyAl
 import json
 from GF import GF
+
 
 class StatsGiver:
 
@@ -23,50 +25,42 @@ class StatsGiver:
         # sending get request and saving the response as response object
         r = requests.get(url=url, params=params, headers=headers, verify=True)
 
-        # extracting data in json format
-        data = r.json();
-
-        print(json.dumps(data, indent=4, sort_keys=True))
-
-        return data
+        if (r.ok == False):
+            return False
+        else:
+            return r.json()['result']
 
     @staticmethod
     def get_market():
         # api-endpoint
         url = "https://api.bittrex.com/api/v1.1/public/getmarkets"
 
-
         headers = {
             'Accepts': 'application/json',
         }
         # sending get request and saving the response as response object
         r = requests.get(url=url, headers=headers, verify=True)
 
-        # extracting data in json format
-        data = r.json()
-
-        #print(json.dumps(data, indent=4, sort_keys=True))
-
-        return data['result']
+        if (r.ok == False):
+            return False
+        else:
+            return r.json()['result']
 
     @staticmethod
     def get_market_summaries():
         # api-endpoint
         url = "https://api.bittrex.com/api/v1.1/public/getmarketsummaries"
 
-
         headers = {
             'Accepts': 'application/json',
         }
         # sending get request and saving the response as response object
         r = requests.get(url=url, headers=headers, verify=True)
 
-        # extracting data in json format
-        data = r.json()
-
-        #print(json.dumps(data, indent=4, sort_keys=True))
-
-        return data['result']
+        if (r.ok == False):
+            return False
+        else:
+            return r.json()['result']
 
     @staticmethod
     def get_market_summary(tradeString):
@@ -79,41 +73,37 @@ class StatsGiver:
         # sending get request and saving the response as response object
         r = requests.get(url=url, headers=headers, verify=True)
 
-        # extracting data in json format
-        data = r.json()
-
-        # print(json.dumps(data, indent=4, sort_keys=True))
-
-        return data['result']
-
-    @staticmethod # Gets the average trade price for the trade. !!! Does not work well with altcoins !!!
-    def get_average_trade(trade_string, interval):
-        candles = StatsGiver.get_market_candles(trade_string, interval)
-        stat_sum = 0
-        for i in candles:
-            stat_sum += ((float(i['open']) + float(i['close'])) / 2)
-
-        return stat_sum / len(candles)
+        if (r.ok == False):
+            return False
+        else:
+            return r.json()['result']
 
     @staticmethod  # Gets the average trade price for the trade. !!! Does not work well with altcoins !!!
-    def get_average_trade_extra(trade_string, interval):
+    def get_average_trade(trade_string, interval):
         candles = StatsGiver.get_market_candles(trade_string, interval)
-        stat_sum = 0
-        number_of_passes = 0
-        for i in candles:
-            mid_average = ((float(i['open']) + float(i['close'])) / 2)
-            stat_sum += mid_average
-        average = stat_sum / len(candles)
-        for i in candles:
-            open_v = float(i['open'])
-            close_v = float(i['close'])
-            if((average <= open_v) & (average >= close_v)) | ((average >= open_v) & (average <= close_v)):
-                number_of_passes += 1
+        if candles != False:
+            stat_sum = 0
+            for i in candles:
+                stat_sum += ((float(i['open']) + float(i['close'])) / 2)
+            return stat_sum / len(candles)
+        else:
+            return False
 
-        return {'marketName':trade_string, 'average':average, "nop":number_of_passes}
+    @staticmethod  # Gets the average trade price for the trade. !!! Does not work well with altcoins !!!
+    def get_average_trade_extra(trade_string, interval, algo_num):
+        candles = StatsGiver.get_market_candles(trade_string, interval)
+        if candles != False:
+            # switcher = {
+            #    0: HeavyAl.__algo1,
+            # }
+            # Get the function from switcher dictionary
+            # func = switcher.get(0, lambda a, b, c: None)
+            return HeavyAl.HeavyAl(trade_string, interval, candles)
+            # return func()
+        else:
+            return False
 
-
-    @staticmethod # Get the the history of the market
+    @staticmethod  # Get the the history of the market
     def get_market_candles(trade_string, interval):
 
         # api-endpoint
@@ -125,9 +115,7 @@ class StatsGiver:
         # sending get request and saving the response as response object
         r = requests.get(url=url, headers=headers, verify=True)
 
-        # extracting data in json format
-        data = r.json()
-
-        #print(json.dumps(data, indent=4, sort_keys=True))
-
-        return data
+        if (r.ok == False):
+            return False
+        else:
+            return r.json()

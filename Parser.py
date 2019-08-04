@@ -32,8 +32,7 @@ class Parser:
         re = []
         for obj in market:
             if (Parser.separateTradeString(obj['MarketName'])['first'] == main_coin):
-                if(obj['Bid'] > 0.005):
-                    re.append(obj)
+                re.append(obj)
 
         return re
 
