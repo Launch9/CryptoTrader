@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4d236627-8a8f-47e4-937c-b863ea76a88e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/HeavyAl.pyx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.py" beforeDir="false" afterPath="$PROJECT_DIR$/App.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/Factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/Parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HeavyAl.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HeavyAl.cpython-36m-x86_64-linux-gnu.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HeavyAl.pyx" beforeDir="false" afterPath="$PROJECT_DIR$/HeavyAl.pyx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StatsGiver.py" beforeDir="false" afterPath="$PROJECT_DIR$/StatsGiver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/temp.linux-x86_64-3.6/HeavyAl.o" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

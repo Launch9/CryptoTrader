@@ -93,12 +93,12 @@ class StatsGiver:
     def get_average_trade_extra(trade_string, interval, algo_num):
         candles = StatsGiver.get_market_candles(trade_string, interval)
         if candles != False:
-            # switcher = {
-            #    0: HeavyAl.__algo1,
-            # }
-            # Get the function from switcher dictionary
-            # func = switcher.get(0, lambda a, b, c: None)
-            return HeavyAl.HeavyAl(trade_string, interval, candles)
+            switcher = {
+               0: HeavyAl.algo1,
+            }
+            #Get the function from switcher dictionary
+            func = switcher.get(0, lambda a, b, c: None)
+            return func(trade_string, interval, candles)
             # return func()
         else:
             return False

@@ -1,11 +1,8 @@
-import time
-from StatsGiver import StatsGiver
-from GraphMaker import GraphMaker
-from FileReader import FileReader
-from FileWriter import FileWriter
-from Parser import Parser
-from Trader import Trader
-from GF import GF
+import pyximport
+pyximport.install(setup_args={'include_dirs':['']}, language_level='3str')
+#import subprocess
+#subprocess.call(["cython", "-a", "HeavyAl.pyx"])
+print('Compiled cython modules!')
 from Factory import Factory
 import time
 '''
@@ -16,7 +13,7 @@ When to buy:
 
 
 class App:
-
+    
     waitTime = 10
     isRunning = True
     factories = []
