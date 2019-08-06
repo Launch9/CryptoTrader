@@ -1,5 +1,6 @@
 import pyximport
 pyximport.install(setup_args={'include_dirs':['']}, language_level='3str')
+#import timeit
 #import subprocess
 #subprocess.call(["cython", "-a", "HeavyAl.pyx"])
 print('Compiled cython modules!')
@@ -33,7 +34,7 @@ class App:
         print("Running...")
 
         self.create_factories()
-
+        
         #GF.pretty_print(StatsGiver.get_average_trade_extra("LTC-BTC", "DAY_1"))
         """while self.isRunning:
             # Reading config file for updates from node.js server

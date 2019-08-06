@@ -1,6 +1,8 @@
 # importing the requests library
 import requests
 import HeavyAl
+import time
+import timeit
 import json
 from GF import GF
 
@@ -96,9 +98,14 @@ class StatsGiver:
             switcher = {
                0: HeavyAl.algo1,
             }
+            
+            time1 = time.time()
             #Get the function from switcher dictionary
             func = switcher.get(0, lambda a, b, c: None)
-            return func(trade_string, interval, candles)
+            answer = func(trade_string, interval, candles)
+            print(time.time() - time1)
+            return answer
+            
             # return func()
         else:
             return False
