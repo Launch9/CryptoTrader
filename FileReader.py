@@ -30,7 +30,7 @@ class FileReader:
                         varType = 1
                 else:
                     if varType == 0:
-                        cd.sleepTimeMinutes = int(cache)
+                        cd.sleepTimeMinutes = float(cache)
                     elif varType == 1:
                         if cache == "0":
                             cd.isActive = False

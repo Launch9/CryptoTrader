@@ -6,6 +6,7 @@ pyximport.install(setup_args={'include_dirs':['']}, language_level='3str')
 print('Compiled cython modules!')
 from Factory import Factory
 import time
+import PInfo
 '''
 When to buy:
     Bot buys when currency is below average line by a certain percent.
@@ -23,7 +24,7 @@ class App:
         print("Initializing app...")
 
     def create_factories(self):
-        usdf1 = Factory("ethf1", "ETH", 10)
+        ethf1 = Factory("ethf1", "ETH", 2)
         self.factories.append(usdf1)
 
     def update_factories(self):
@@ -34,9 +35,10 @@ class App:
         print("Running...")
 
         self.create_factories()
-        
+        #print(PInfo.get_wallet())
         #GF.pretty_print(StatsGiver.get_average_trade_extra("LTC-BTC", "DAY_1"))
-        """while self.isRunning:
+        while self.isRunning:
+
             # Reading config file for updates from node.js server
 
             config_data = FileReader.read_config()

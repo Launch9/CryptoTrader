@@ -58,6 +58,8 @@ def algo1(str trade_string, str interval, candles):
             if buy_nop == scrunch_data[i]:
                 buy_line = average - (block_size / (i + 1))
         cdef double percent_increase = ((sell_line - buy_line) / buy_line) * 100
+
+        
         return {'marketName': trade_string, 
         'average': average,
         'buy': buy_line,
