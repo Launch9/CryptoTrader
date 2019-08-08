@@ -29,6 +29,7 @@ class Factory:
                     GF.pretty_print(data)
                     is_ok = True
                     investment_data.append(data)
+                    time.sleep(1.1)
                 else:
                     is_ok = False
                     print("Failed to get data")
