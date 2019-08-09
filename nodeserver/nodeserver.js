@@ -1,8 +1,8 @@
 console.log("Testing!");
 const express = require('express');
 var cors = require('cors');
-var order = require('./modules/buySell');
-var common = require('./modules/currentStats');
+var balances = require('./modules/balances.js');
+var orders = require('./modules/orders.js');
 var multer  = require('multer');
 var bodyParser = require('body-parser');
 const path = require('path');
@@ -34,11 +34,19 @@ let upload = multer({storage: storage});
 app.use("/latestData", express.static(__dirname + '/latestData'));
 
 
-app.get('/market/buylimit', (req,res)=>{
+app.get('/api/v1.1/market/buylimit', (req,res)=>{
     var market = req.query.market;
     var quantity = req.query.quantity;
     var rate = req.query.rate;
     var timeInForce = req.query.timeInForce;
+    var uuid = orders.place_buylimit(market,quantity,rate,timeInForce);
+    res.send({
+      "success": true,
+      "message": "",
+      "result": {
+        "uuid": uuid 
+      }
+    })
     /*{
   "success": true,
   "message": "''",
@@ -48,11 +56,19 @@ app.get('/market/buylimit', (req,res)=>{
 }*/
 });
 
-app.get('/market/selllimit', (req,res)=>{
+app.get('/api/v1.1/market/selllimit', (req,res)=>{
     var market = req.query.market;
     var quantity = req.query.quantity;
     var rate = req.query.rate;
     var timeInForce = req.query.timeInForce;
+    var uuid = orders.place_selllimit(market,quantity,rate,timeInForce);
+    res.send({
+      "success": true,
+      "message": "",
+      "result": {
+        "uuid": uuid 
+      }
+    })
     /*{
   "success": true,
   "message": "''",
@@ -62,8 +78,31 @@ app.get('/market/selllimit', (req,res)=>{
 }*/
 });
 
-app.get('/market/getopenorders', (req,res)=>{
-    var market = req.query.market;
+app.get('/buy', (req,res)=>{
+  console.log("Trying to buy!");
+  var market = req.query.market;
+  var quantity = req.query.quantity;
+  var rate = req.query.rate;
+  balances.buy(market, quantity);
+});
+
+app.get('/update', (req,res)=>{
+  orders.update();
+    res.send({
+      "success": true,
+      "message": ""
+    })
+});
+
+app.get('/api/v1.1/market/getorder', (req,res)=>{
+    var uuid = req.query.uuid;
+    var order = orders.get_order(uuid);
+
+    res.send({
+      "success": true,
+      "message": "",
+      "result": [ order ]
+    })
     /*{
   "success": true,
   "message": "''",
@@ -89,7 +128,7 @@ app.get('/market/getopenorders', (req,res)=>{
 }*/
 });
 
-app.get('/account/getbalances', (req,res)=>{
+app.get('/api/v1.1/account/getbalances', (req,res)=>{
     /*{
   "success": true,
   "message": "''",
@@ -107,7 +146,7 @@ app.get('/account/getbalances', (req,res)=>{
 }*/
 });
 
-app.get('/account/getbalance', (req,res)=>{
+app.get('/api/v1.1/account/getbalance', (req,res)=>{
     var currencty = req.query.currency;
     /*{
   "success": true,
@@ -127,6 +166,7 @@ app.get('/account/getbalance', (req,res)=>{
 
 app.get('/ping', (req,res)=>{
     console.log("Good job, you pinged the server.");
+    res.send("Hi!");
 });
 
 server.listen(8080, () => console.log('Proxy app listening on port ' + constants.port + '!'));

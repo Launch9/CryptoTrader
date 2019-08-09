@@ -24,8 +24,8 @@ function separateTradeString(tradeString){
 function get_market_summary(tradeString, callback = (result)=>{}){
     request("https://api.bittrex.com/api/v1.1/public/getmarketsummary?market=" + tradeString, function(error, response, body) {
         console.log(body);
-        console.log(body.json()['result']);
-        callback(body.json()['result']);
+        console.log(JSON.parse(body).result);
+        callback(JSON.parse(body).result);
     });
 }
 
@@ -43,6 +43,16 @@ function get_wallet(callback = (result)=>{}){
             
         }
     })
+}
+
+function update_wallet(wallet){
+    fs.writeFile("../data/balances.json", wallet, 'utf8', function (err) {
+        if (err) {
+            console.log("An error occured while writing JSON Object to File.");
+            return console.log(err);
+        }
+        console.log("JSON file has been saved.");
+    });
 }
 
 function buy(trade_string, how_much_spent){
@@ -73,6 +83,12 @@ function buy(trade_string, how_much_spent){
     wallet[c_two] += how_much_gained;  //LTC
 
     //Updating the wallet
-    update_wallet(wallet);
+    update_wallet(JSON.stringify(wallet));
+
+}
+
+module.exports = {
+    "buy": buy,
+    "get_wallet": get_wallet
 
 }
