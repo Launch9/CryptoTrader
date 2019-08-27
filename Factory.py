@@ -1,10 +1,16 @@
 from FileReader import FileReader
 from StatsGiver import StatsGiver
+from FileWriter import FileWriter
 from GF import GF
 import time
+import datetime
+from Node import Node
 from Parser import Parser
 import timeit
+import PInfo
 class Factory:
+    MINIMUM_INVEST_PERCENT = 40.0
+    MINIMUM_INVEST_USD = 10 #Ten dollars
     nodes = []
     mainCoin = ""
     name = ""
@@ -17,8 +23,12 @@ class Factory:
         self.create_nodes()
 
     def create_nodes(self):
-        wallet = FileReader.get_wallet()
+        wallet = PInfo.get_wallet()
         market = Parser.find_market_strings(self.mainCoin, StatsGiver.get_market_summaries())
+        usd = StatsGiver.convert_crypto_to_usd(self.mainCoin, next((x for x in wallet["result"] if x["Currency"] == self.mainCoin), None)["Available"])
+        print("THIS IS THE USD EQUIV")
+        print(usd)
+        print("THIS IS THE END OF USD EQUIV")
         investment_data = []
         
         for i in market:
@@ -40,15 +50,26 @@ class Factory:
         print("RESULTS I WANTED=-=-=-=-=-=-=-=-=-=")
         top_investments = investment_data
         top_investments.sort(key=lambda x: x['percent'])
-        for i in top_investments:
-            GF.pretty_print(i)
-        '''for i in investment_data:
-            percent = i.percent
-            top_investments.sort()
-            for b in top_investments
-                if percent > b.percent:'''
-                    
+        for i in reversed(top_investments):
+            if(i['currentPos'] == -2 and float(i['percent']) > self.MINIMUM_INVEST_PERCENT):
+                print("Node created!")
+                GF.pretty_print(i);
+                #Getting current time stamp.
+                st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H:%M:%S')
+                #Stamping the object
+                i['timeStamp'] = str(st)
+                #Getting the history file related to the market we are using.
+                history = FileReader.read_history(i['marketName'])
+                #Adding/updating data to history file
+                history['candles'] = StatsGiver.get_market_candles(i["marketName"], "DAY_1")
+                history['data'].append(i)
+                
+                FileWriter.store_stats(history, Parser.reverse_trade_string(i['marketName']))
 
+                self.__create_node(Parser.reverse_trade_string(i['marketName']), StatsGiver.convert_usd_to_crypto(self.mainCoin,self.MINIMUM_INVEST_USD));
+                    
+    def __create_node(self, trade_string, how_much):
+        self.nodes.append(Node(trade_string,how_much))
 
     def update(self):
         for node in self.nodes:

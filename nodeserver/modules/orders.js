@@ -1,11 +1,11 @@
 const uuidv4 = require('uuid/v4');
-
-var orders = [{}]
+var balances = require('./balances.js');
+var orders = []
 
 function place_buylimit(market, quantity, rate, tisBuye){
     var uuid = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2disBuydfbbd4bed'
     var now = new Date();
-    orders += {
+    orders.push({
         "OrderUuid": uuid,
         "Exchange": market,
         "OrderType": "buy",
@@ -13,7 +13,7 @@ function place_buylimit(market, quantity, rate, tisBuye){
         "Quantity": quantity,
         "Opened": now.toISOString(),
         "Closed": null
-    }
+    })
     /*"result": [
     {
       "OrderUuid": "fd97d393-e9b9-4dd1-9dbf-f288fc72a185",
@@ -38,7 +38,8 @@ function place_buylimit(market, quantity, rate, tisBuye){
 
 function place_selllimit(market, quantity, rate, timeInForce){
     var uuid = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
-    orders += {
+    var now = new Date();
+    orders.push({
         "OrderUuid": uuid,
         "Exchange": market,
         "OrderType": "sell",
@@ -46,15 +47,17 @@ function place_selllimit(market, quantity, rate, timeInForce){
         "Quantity": quantity,
         "Opened": now.toISOString(),
         "Closed": null
-    }
+    })
     return uuid;
 }
 
 function get_order(uuid){
-    var self = this;
-    for(var i = 0; i < self.orders.length; i++){
-        if(self.orders['OrderUuid'] == uuid){
-            return self.orders[i];
+    console.log(orders);
+    console.log("UUID: " + uuid);
+    for(var i = 0; i < orders.length; i++){
+        if(orders[i]['OrderUuid'] == uuid){
+            console.log("Found it!");
+            return orders[i];
         }
     }
     return {};
@@ -64,16 +67,22 @@ function close_order(order){
     var now = new Date();
     if(order.Closed == null){
         order.Closed = now.toISOString();
+        if(order.OrderType == "sell"){
+            balances.sell(order.Exchange, order.Quantity)
+        }
+        else{
+            balances.buy(order.Exchange, order.Quantity)
+        }
     }
     else{
         console.log("Order already closed!");
     }
-    
+    return order;
 }
 
 function update(){
     for(var i = 0; i < orders.length; i++){
-        close_order(orders[i]);
+        orders[i] = close_order(orders[i]);
     }
 }
 

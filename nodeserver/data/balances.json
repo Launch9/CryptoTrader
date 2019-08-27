@@ -1,1 +1,38 @@
-{"BTC": 0.4999999999999996, "LTC": 53.13178681134297, "DMT": 0.0, "RVN": 0.0, "PROM": 0.0}
+{
+    "DOGE": {
+        "Currency": "DOGE",
+        "Balance": 0.0,
+        "Available": 0.0,
+        "Pending": 0,
+        "CryptoAddress": "DLxcEt3AatMhhhffgdgdfoB9NnngT62HiF",
+        "Requested": false,
+        "Uuid": null
+    },
+    "BTC": {
+        "Currency": "BTC",
+        "Balance": 0,
+        "Available": 0,
+        "Pending": 0,
+        "CryptoAddress": "DLxcEt3Aatefgefg2NTatzjsfHNoT62HiF",
+        "Requested": false,
+        "Uuid": null
+    },
+    "XMR": {
+        "Currency": "XMR",
+        "Balance": 0,
+        "Available": 0,
+        "Pending": 0,
+        "CryptoAddress": "dfgdfgregtMyr2NTatzjsfHNoB9NT62HiF",
+        "Requested": false,
+        "Uuid": null
+    },
+    "ETH": {
+        "Currency": "ETH",
+        "Balance": 0.055,
+        "Available": 0.055,
+        "Pending": 0,
+        "CryptoAddress": "dgrgefgergdrgfgegfdrdfHNoB9NT62HiF",
+        "Requested": false,
+        "Uuid": null
+    }
+}

@@ -57,8 +57,25 @@ def algo1(str trade_string, str interval, candles):
         for i in range(opti_num):
             if buy_nop == scrunch_data[i]:
                 buy_line = average - (block_size / (i + 1))
-        cdef double percent_increase = ((sell_line - buy_line) / buy_line) * 100
 
+        cdef double percent_increase = ((sell_line - buy_line) / buy_line) * 100
+        cdef int current_pos = 0
+        cdef double current = <double>float(candles[len(candles) - 1]['close'])
+
+        #Calculating the current position. Helps in determining if the trade is worth investing in right now.
+        if(current > sell_line):
+            current_pos = 2
+
+        if(current > mid_average and current < sell_line):
+            current_pos = 1
+        
+        if(current < mid_average and current > buy_line):
+            current_pos = -1
+
+        if(current < buy_line):
+            current_pos = -2
+        
+        
         
         return {'marketName': trade_string, 
         'average': average,
@@ -67,4 +84,6 @@ def algo1(str trade_string, str interval, candles):
         "nop-average": number_of_passes,
         'nop-buy': buy_nop,
         'nop-sell': sell_nop,
-        'percent': percent_increase}
+        'percent': percent_increase,
+        "currentPos": current_pos
+        }

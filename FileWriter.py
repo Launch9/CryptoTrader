@@ -7,14 +7,15 @@ from Parser import Parser
 class FileWriter:
 
     @staticmethod
-    def store_stats(stats_json):
-        st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H:%M:%S')
-        with open('BTC_history/crypto_data_' + str(st) + '.json', 'w') as json_file:
+    def store_stats(stats_json, trade_string):
+        
+        mainCoin = Parser.separateTradeString(trade_string)['first']
+        #Writing to file.
+        with open('data/' + mainCoin + '_history/' + trade_string + '.json', 'w') as json_file:
             json.dump(stats_json, json_file)
             json_file.close()
 
-        print(st)
-        print("Stored crypto_data")
+        print("Updated " + trade_string + ".json")
 
     @staticmethod
     def record_trans(trade_string, is_buying, coin1amount, coin2amount, exchangePrice):

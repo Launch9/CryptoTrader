@@ -82,8 +82,14 @@ app.get('/buy', (req,res)=>{
   console.log("Trying to buy!");
   var market = req.query.market;
   var quantity = req.query.quantity;
+  var askPrice = req.query.ask;
   var rate = req.query.rate;
-  balances.buy(market, quantity);
+  console.log(market);
+  balances.sell(market, quantity, askPrice);
+  res.send({
+    "success": true,
+    "message": ""
+  })
 });
 
 app.get('/update', (req,res)=>{
@@ -129,6 +135,19 @@ app.get('/api/v1.1/market/getorder', (req,res)=>{
 });
 
 app.get('/api/v1.1/account/getbalances', (req,res)=>{
+  balances.get_wallet((json)=>{
+    var result = [];
+    var keys = Object.keys(json);
+    keys.forEach(function(key){
+        result.push(json[key]);
+    });
+    res.send({
+      "success": true,
+      "message": "",
+      "result": result
+    })
+    
+  })
     /*{
   "success": true,
   "message": "''",
@@ -147,7 +166,14 @@ app.get('/api/v1.1/account/getbalances', (req,res)=>{
 });
 
 app.get('/api/v1.1/account/getbalance', (req,res)=>{
-    var currencty = req.query.currency;
+    var currency = req.query.currency;
+    balances.get_wallet((result)=>{
+          res.send({
+            "success": true,
+            "message": "",
+            "result": result[currency]
+          })
+    })
     /*{
   "success": true,
   "message": "''",

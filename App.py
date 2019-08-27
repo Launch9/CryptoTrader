@@ -1,11 +1,12 @@
-import pyximport
-pyximport.install(setup_args={'include_dirs':['']}, language_level='3str')
+
+import json
 #import timeit
 #import subprocess
 #subprocess.call(["cython", "-a", "HeavyAl.pyx"])
 print('Compiled cython modules!')
 from Factory import Factory
 import time
+from FileReader import FileReader
 import PInfo
 '''
 When to buy:
@@ -25,7 +26,7 @@ class App:
 
     def create_factories(self):
         ethf1 = Factory("ethf1", "ETH", 2)
-        self.factories.append(usdf1)
+        self.factories.append(ethf1)
 
     def update_factories(self):
         for factory in self.factories:
@@ -44,12 +45,12 @@ class App:
             config_data = FileReader.read_config()
 
             # Checking to see if server should continue to run
-            self.isRunning = config_data.isActive
+            self.isRunning = config_data["IS_ACTIVE"]
 
             self.update_factories()
 
             # Sleeping thread to wait for market to change
-            time.sleep(60 * config_data.sleepTimeMinutes)
+            time.sleep(60 * config_data["SLEEP_TIME_MINUTES"])
 
         print("Shutting down!")
-        time.sleep(3)"""
+        time.sleep(3)

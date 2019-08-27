@@ -33,6 +33,41 @@ class StatsGiver:
             return r.json()['result']
 
     @staticmethod
+    def convert_usd_to_crypto(currency, how_much_usd):
+        # api-endpoint
+        url = "https://api.cryptonator.com/api/ticker/usd-" + currency
+
+        headers = {
+            'Accepts': 'application/json',
+        }
+
+        # sending get request and saving the response as response object
+        r = requests.get(url=url, headers=headers, verify=True).json()
+        GF.pretty_print(r)
+        
+        if (r['success'] == False):
+            return False
+        else:
+            return (float(r['ticker']['price']) * how_much_usd);
+
+    @staticmethod
+    def convert_crypto_to_usd(currency, how_much_crypto):
+         # api-endpoint
+        url = "https://api.cryptonator.com/api/ticker/" + currency + "-usd"
+
+        headers = {
+            'Accepts': 'application/json',
+        }
+
+        # sending get request and saving the response as response object
+        r = requests.get(url=url, headers=headers, verify=True).json()
+        GF.pretty_print(r)
+        
+        if (r['success'] == False):
+            return False
+        else:
+            return (float(r['ticker']['price']) * how_much_crypto);
+    @staticmethod
     def get_market():
         # api-endpoint
         url = "https://api.bittrex.com/api/v1.1/public/getmarkets"
