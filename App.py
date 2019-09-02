@@ -25,7 +25,7 @@ class App:
         print("Initializing app...")
 
     def create_factories(self):
-        ethf1 = Factory("ethf1", "ETH", 2)
+        ethf1 = Factory("ethf1", "USDT", 2)
         self.factories.append(ethf1)
 
     def update_factories(self):

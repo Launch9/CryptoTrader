@@ -9,6 +9,7 @@ from GF import GF
 
 class StatsGiver:
 
+   
     @staticmethod
     def get_stats():
 
@@ -43,7 +44,6 @@ class StatsGiver:
 
         # sending get request and saving the response as response object
         r = requests.get(url=url, headers=headers, verify=True).json()
-        GF.pretty_print(r)
         
         if (r['success'] == False):
             return False
@@ -61,7 +61,7 @@ class StatsGiver:
 
         # sending get request and saving the response as response object
         r = requests.get(url=url, headers=headers, verify=True).json()
-        GF.pretty_print(r)
+       
         
         if (r['success'] == False):
             return False
@@ -144,6 +144,9 @@ class StatsGiver:
             # return func()
         else:
             return False
+
+   # def get_old_market_candles(trade_string, interval):
+
 
     @staticmethod  # Get the the history of the market
     def get_market_candles(trade_string, interval):

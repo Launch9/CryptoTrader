@@ -17,6 +17,15 @@
         "Requested": false,
         "Uuid": null
     },
+    "USDT": {
+        "Currency": "USDT",
+        "Balance": 0,
+        "Available": 0,
+        "Pending": 0,
+        "CryptoAddress": "DLxcEt3Aatefgefg2NTatzjsfHNoT62HiF",
+        "Requested": false,
+        "Uuid": null
+    },
     "XMR": {
         "Currency": "XMR",
         "Balance": 0,

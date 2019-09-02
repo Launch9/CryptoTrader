@@ -19,7 +19,7 @@ class Node:
         
     def __update_history(self):
         #Getting current time stamp.
-        st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H:%M:%S')
+        """st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H:%M:%S')
         #Stamping the object
         self.data['timeStamp'] = str(st)
         #Getting the history file related to the market we are using.
@@ -28,7 +28,8 @@ class Node:
         history['candles'] = StatsGiver.get_market_candles(self.data["marketName"], "DAY_1")
         history['data'].append(self.data)
         
-        FileWriter.store_stats(history, Parser.reverse_trade_string(self.data['marketName']))
+        FileWriter.store_stats(history, Parser.reverse_trade_string(self.data['marketName']))"""
+        #time.sleep(1.1)
 
     def update(self):
-        print("Updating node!")
+        x = 1        

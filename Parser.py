@@ -1,4 +1,18 @@
+
 class Parser:
+
+    
+
+    @staticmethod
+    def is_valid_trade(trade_string):
+        stringData = Parser.separateTradeString(trade_string)
+        nonvalid = ["ADT", "MEDX", "AMP", "BAY", "BCTP", "BOXX", "CMCT", "DNT", "DTA", "ENG", 'FLDC', 'GO', 'GTO', 'HYDRO', 'IHT', 'LBA', 'MFT', 'MOBI', 'NLC2', 'NMR', 'PTOY', 'QRL', 'QTUM', 'RFR', 'STORJ', 'SWT', 'XEL', 'XNK',
+        "ADX", "AID", "ANT", "BFT", 'BKX', 'BLT', 'BNT', 'CVC', 'DCT', 'DMT', 'EDG', 'GNO', 'GUP', 'HMQ', 'INCNT', 'IOP', 'LRC', 'MCO', 'MET', 'MLN', 'MOC', 'NGC', 'NXT', 'OCN', 'OMG', 'PAL', 'PART', 'PAY', 'PMA', 'POT', 'POWR', 'RCN', 'RLC', 'RVR', 'SNT', 'SPC', 'SRN', 'UP', 'UPP', 'VEE', 'VIB', 'WINGS']
+        
+        for b in nonvalid:
+            if((stringData['first'] == b or stringData['second'] == b)):
+                return False
+        return True
 
     @staticmethod
     def findCurrency(currentStats):

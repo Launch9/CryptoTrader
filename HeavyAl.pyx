@@ -32,7 +32,6 @@ def algo1(str trade_string, str interval, candles):
         cdef int buy_nop = 0
         cdef int sell_nop = 0
         cdef int opti_num = 100
-        
         #Shrinking sell_line
         for i in range(opti_num):
             sell_line = average + (block_size / (i + 1))
@@ -61,6 +60,30 @@ def algo1(str trade_string, str interval, candles):
         cdef double percent_increase = ((sell_line - buy_line) / buy_line) * 100
         cdef int current_pos = 0
         cdef double current = <double>float(candles[len(candles) - 1]['close'])
+        cdef double avg = 0
+        profit_nops = 0
+        is_above = None
+        for i in candles:
+            avg = ((<double>float(i['open']) + <double>float(i['close'])) / 2.0)
+            if(avg > sell_line):
+                current_pos = 2
+                if(is_above == False):
+                    profit_nops += 1
+
+                is_above = True
+
+            if(avg > mid_average and current < sell_line):
+                current_pos = 1
+        
+            if(avg < mid_average and current > buy_line):
+                current_pos = -1
+
+            if(avg < buy_line):
+                current_pos = -2
+                if(is_above == True):
+                    profit_nops += 1
+
+                is_above = False
 
         #Calculating the current position. Helps in determining if the trade is worth investing in right now.
         if(current > sell_line):
@@ -75,6 +98,7 @@ def algo1(str trade_string, str interval, candles):
         if(current < buy_line):
             current_pos = -2
         
+        cdef current_percent_increase = ((buy_line - current) / current) * 100
         
         
         return {'marketName': trade_string, 
@@ -85,5 +109,8 @@ def algo1(str trade_string, str interval, candles):
         'nop-buy': buy_nop,
         'nop-sell': sell_nop,
         'percent': percent_increase,
-        "currentPos": current_pos
+        "currentPos": current_pos,
+        "nop-profit": profit_nops,
+        "cpi": current_percent_increase,
+        "candleLength": len(candles)
         }
