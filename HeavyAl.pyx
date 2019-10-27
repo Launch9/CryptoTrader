@@ -6,8 +6,8 @@ def find_passes(candles, line):
     cdef double open_v = 0
     cdef int number_of_passes = 0
     for i in candles:
-        open_v = <double>float(i['open'])
-        close_v = <double>float(i['close'])
+        open_v = <double>float(i['O'])
+        close_v = <double>float(i['C'])
         if ((line <= open_v) & (line >= close_v)) | ((line >= open_v) & (line <= close_v)):
             number_of_passes += 1
     return number_of_passes
@@ -21,7 +21,7 @@ def algo1(str trade_string, str interval, candles):
         cdef double mid_average = 0
         
         for i in candles:
-            mid_average = ((<double>float(i['open']) + <double>float(i['close'])) / 2.0)
+            mid_average = ((<double>float(i['O']) + <double>float(i['C'])) / 2.0)
             stat_sum += mid_average
         cdef double average = stat_sum / len(candles)
         cdef int nop_average = find_passes(candles, average)
@@ -59,12 +59,12 @@ def algo1(str trade_string, str interval, candles):
 
         cdef double percent_increase = ((sell_line - buy_line) / buy_line) * 100
         cdef int current_pos = 0
-        cdef double current = <double>float(candles[len(candles) - 1]['close'])
+        cdef double current = <double>float(candles[len(candles) - 1]['C'])
         cdef double avg = 0
         profit_nops = 0
         is_above = None
         for i in candles:
-            avg = ((<double>float(i['open']) + <double>float(i['close'])) / 2.0)
+            avg = ((<double>float(i['O']) + <double>float(i['C'])) / 2.0)
             if(avg > sell_line):
                 current_pos = 2
                 if(is_above == False):

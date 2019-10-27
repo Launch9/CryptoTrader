@@ -10,8 +10,8 @@
     },
     "BTC": {
         "Currency": "BTC",
-        "Balance": 0,
-        "Available": 0,
+        "Balance": 0.0014,
+        "Available": 0.0014,
         "Pending": 0,
         "CryptoAddress": "DLxcEt3Aatefgefg2NTatzjsfHNoT62HiF",
         "Requested": false,
@@ -19,8 +19,8 @@
     },
     "USDT": {
         "Currency": "USDT",
-        "Balance": 0,
-        "Available": 0,
+        "Balance": 15.0,
+        "Available": 15.0,
         "Pending": 0,
         "CryptoAddress": "DLxcEt3Aatefgefg2NTatzjsfHNoT62HiF",
         "Requested": false,

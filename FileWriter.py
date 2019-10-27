@@ -11,7 +11,7 @@ class FileWriter:
         
         mainCoin = Parser.separateTradeString(trade_string)['first']
         #Writing to file.
-        with open('data/' + mainCoin + '_history/' + trade_string + '.json', 'w') as json_file:
+        with open('data/' + mainCoin + '_history/' + trade_string + '.json', 'w+') as json_file:
             json.dump(stats_json, json_file)
             json_file.close()
 

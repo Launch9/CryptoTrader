@@ -1,13 +1,14 @@
 
 import json
 #import timeit
-#import subprocess
-#subprocess.call(["cython", "-a", "HeavyAl.pyx"])
+import subprocess
+subprocess.call(["cython", "-a", "HeavyAl.pyx"])
 print('Compiled cython modules!')
 from Factory import Factory
 import time
 from FileReader import FileReader
 import PInfo
+from GF import GF
 '''
 When to buy:
     Bot buys when currency is below average line by a certain percent.
@@ -23,10 +24,17 @@ class App:
 
     def __init__(self):
         print("Initializing app...")
+        config_data = FileReader.read_config()
+        GF.CONFIG = config_data
 
     def create_factories(self):
-        ethf1 = Factory("ethf1", "USDT", 2)
-        self.factories.append(ethf1)
+        usdtf1 = Factory("usdtf1", "USDT", 2)
+        ethf2 = Factory("ethf1", "ETH", 2)
+        btcf3 = Factory("btcf1", "USDT", 2)
+        btcf = Factory("btchf1", "USD", 2)
+        self.factories.append(usdtf1)
+        #self.factories.append(ethf2)
+        #self.factories.append(btcf3)
 
     def update_factories(self):
         for factory in self.factories:
@@ -43,7 +51,7 @@ class App:
             # Reading config file for updates from node.js server
 
             config_data = FileReader.read_config()
-
+            GF.CONFIG = config_data
             # Checking to see if server should continue to run
             self.isRunning = config_data["IS_ACTIVE"]
 

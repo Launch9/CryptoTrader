@@ -4,6 +4,9 @@ import HeavyAl
 import time
 import timeit
 import json
+
+from Parser import Parser
+from FileReader import FileReader
 from GF import GF
 
 
@@ -121,25 +124,34 @@ class StatsGiver:
         if candles != False:
             stat_sum = 0
             for i in candles:
-                stat_sum += ((float(i['open']) + float(i['close'])) / 2)
+                stat_sum += ((float(i['O']) + float(i['C'])) / 2)
             return stat_sum / len(candles)
         else:
             return False
 
     @staticmethod  # Gets the average trade price for the trade. !!! Does not work well with altcoins !!!
     def get_average_trade_extra(trade_string, interval, algo_num):
-        candles = StatsGiver.get_market_candles(trade_string, interval)
+        if(GF.CONFIG['MODE'] == 0):
+            candles = StatsGiver.get_market_candles(trade_string, interval)
+        elif(GF.CONFIG['MODE'] == 1):
+            candles = StatsGiver.get_saved_market_candles(trade_string, interval)
+        if(candles == False):
+            return -1
+        if(candles['success'] == False):
+            return False
+        #candles = candles[(len(candles) - 30):]
         if candles != False:
             switcher = {
-               0: HeavyAl.algo1,
+               0: HeavyAl.algo1
+               
             }
             
             time1 = time.time()
             #Get the function from switcher dictionary
             func = switcher.get(0, lambda a, b, c: None)
-            answer = func(trade_string, interval, candles)
+            answer = func(trade_string, interval, candles['result'])
             print(time.time() - time1)
-            return answer
+            return {'data':candles, 'answer':answer}
             
             # return func()
         else:
@@ -152,7 +164,8 @@ class StatsGiver:
     def get_market_candles(trade_string, interval):
 
         # api-endpoint
-        url = "https://api.bittrex.com/v3/markets/" + trade_string + "/candles?candleInterval=" + interval
+        url = "https://bittrex.com/Api/v2.0/pub/market/GetTicks?marketName=" + Parser.reverse_trade_string(trade_string) + "&tickInterval=onemin&_=1499127220008"
+        #url = "https://api.bittrex.com/v3/markets/" + trade_string + "/candles?candleInterval=" + interval
 
         headers = {
             'Accepts': 'application/json',
@@ -164,3 +177,7 @@ class StatsGiver:
             return False
         else:
             return r.json()
+
+    @staticmethod
+    def get_saved_market_candles(trade_string, interval):
+        return FileReader.read_history(trade_string)['result']
