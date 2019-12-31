@@ -29,9 +29,9 @@ class App:
 
     def create_factories(self):
         usdtf1 = Factory("usdtf1", "USDT", 2)
-        ethf2 = Factory("ethf1", "ETH", 2)
-        btcf3 = Factory("btcf1", "USDT", 2)
-        btcf = Factory("btchf1", "USD", 2)
+        #ethf2 = Factory("ethf1", "ETH", 2)
+        #btcf3 = Factory("btcf1", "USDT", 2)
+        #btcf = Factory("btchf1", "USD", 2)
         self.factories.append(usdtf1)
         #self.factories.append(ethf2)
         #self.factories.append(btcf3)

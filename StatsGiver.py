@@ -69,7 +69,7 @@ class StatsGiver:
         if (r['success'] == False):
             return False
         else:
-            return (float(r['ticker']['price']) * how_much_crypto);
+            return (float(r['ticker']['price']) * how_much_crypto)
     @staticmethod
     def get_market():
         # api-endpoint
@@ -143,14 +143,13 @@ class StatsGiver:
         if candles != False:
             switcher = {
                0: HeavyAl.algo1
-               
             }
             
             time1 = time.time()
             #Get the function from switcher dictionary
             func = switcher.get(0, lambda a, b, c: None)
             answer = func(trade_string, interval, candles['result'])
-            print(time.time() - time1)
+            
             return {'data':candles, 'answer':answer}
             
             # return func()

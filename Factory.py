@@ -37,7 +37,7 @@ class Factory:
                 if(Parser.is_valid_trade(i['MarketName'])):
                     data = StatsGiver.get_average_trade_extra(Parser.reverse_trade_string(i['MarketName']), "DAY_1", 1)
                     if data != False and data != -1:
-                        GF.pretty_print(data)
+                        GF.pretty_print(data['answer'])
                         is_ok = True
                         investment_data.append(data['answer'])
                         FileWriter.store_stats(data['data']['result'], i['MarketName'])
@@ -70,9 +70,9 @@ class Factory:
         profit_nop_range = (float(top_investments[len(top_investments) - 1]['nop-profit']) - float(top_investments[0]['nop-profit']))
         profit_nop_value = 100 / profit_nop_range
         
-        """top_investments.sort(key=lambda x: float(x['cpi']))
+        top_investments.sort(key=lambda x: float(x['cpi']))
         percent_range = (float(top_investments[len(top_investments) - 1]['cpi']) - float(top_investments[0]['cpi']))
-        percent_value = 100 / percent_range"""
+        percent_value = 100 / percent_range
 
         """top_investments.sort(key=lambda x: int(x['candleLength']))
         candle_range = (float(top_investments[len(top_investments) - 1]['candleLength']) - float(top_investments[0]['candleLength']))
@@ -80,16 +80,16 @@ class Factory:
         
         top_investments2 = []
         for i in top_investments:
-            invest_value = (float(i['nop-profit']) * profit_nop_value)# + (float(i['candleLength']) * candle_value)
+            invest_value = (float(i['nop-profit']) * profit_nop_value) + (float(i['cpi']) * percent_value)
             i['investValue'] = invest_value
             top_investments2.append(i)
             
             
-        #top_investments2.sort(key=lambda x: x['investValue'])
-        top_investments2.sort(key=lambda x: x['nop-profit'])
-        for i in top_investments2:
+        top_investments2.sort(key=lambda x: x['investValue'])
+        #top_investments2.sort(key=lambda x: x['nop-profit'])
+        for i in top_investments2: 
             GF.pretty_print(i)
-            if(GF.CONFIG["MODE"] == 0):
+            """if(GF.CONFIG["MODE"] == 0):
                 print("Node created!")
                 #Getting current time stamp.
                 st = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d-%H:%M:%S')
@@ -106,7 +106,7 @@ class Factory:
                 if(i['currentPos'] == -2 and float(i['cpi']) < 100):
                     self.__create_node(Parser.reverse_trade_string(i['marketName']), StatsGiver.convert_usd_to_crypto(self.mainCoin,self.MINIMUM_INVEST_USD), i)
             else:
-                GF.pretty_print(i)
+                GF.pretty_print(i)"""
             
                 
                     
